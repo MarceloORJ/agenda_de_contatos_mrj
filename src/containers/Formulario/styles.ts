@@ -1,31 +1,19 @@
 import styled from 'styled-components'
 
 export const Form = styled.form`
-  max-width: 547px;
-  width: 100%;
-  font-weight: bold;
-  font-size: 14px;
-  color: #666666;
-
-  textarea {
-    resize: none;
-    margin: 16px 0px;
-  }
+  display: flex;
+  align-items: center;
+  gap: 16px;
 `
+export const Header = styled.header`
+  margin-bottom: 40px;
+  padding: 16px;
 
-export const Opcoes = styled.div`
-  margin-bottom: 16px;
-
-  p {
-    margin-bottom: 6px;
+  h1 {
+    margin-top: 24px;
+    font-weight: normal;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
   }
-
-  label {
-    margin-right: 6px;
-  }
-`
-
-export const Opcao = styled.div`
-  display: inline;
-  text-transform: capitalize;
 `

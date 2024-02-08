@@ -1,73 +1,76 @@
-import { FormEvent, useState } from 'react'
+import React, { FormEvent, SetStateAction, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Button, Campo } from '../../styles'
+import * as Style from './styles'
 
-import { BotaoSalvar, MainContainer, Titulo } from '../../styles'
-import { Campo } from '../../styles'
-import { Form, Opcoes, Opcao } from './styles'
-import * as enums from '../../utils/enums/Tarefa'
-import { cadastrar } from '../../store/reducers/tarefas'
+import { cadastrar } from '../../store/reducers/contatos'
 
 const Formulario = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
-  const [titulo, setTitulo] = useState('')
-  const [descricao, setDescricao] = useState('')
-  const [prioridade, setPrioridade] = useState(enums.Prioridade.NORMAL)
+  const [name, setName] = useState('')
+  const [tell, setTell] = useState(0)
+  const [email, setEmail] = useState('')
 
-  const cadastrarTarefa = (evento: FormEvent) => {
-    evento.preventDefault()
+  const cadastrarContato = (event: FormEvent) => {
+    event.preventDefault()
 
     dispatch(
       cadastrar({
-        titulo,
-        prioridade,
-        descricao,
-        status: enums.Status.PENDENTE
+        name,
+        email,
+        tell
       })
     )
-    navigate('/')
+
+    setName('')
+    setTell(0)
+    setEmail('')
   }
 
   return (
-    <MainContainer>
-      <Titulo>Nova tarefa</Titulo>
-      <Form onSubmit={cadastrarTarefa}>
+    <>
+      <Style.Header>
+        <h1>AGENDA DE CONTATOS</h1>
+      </Style.Header>
+      <Style.Form onSubmit={cadastrarContato}>
         <Campo
-          value={titulo}
-          onChange={(evento) => setTitulo(evento.target.value)}
+          value={name}
+          onChange={(event: { target: { value: SetStateAction<string> } }) =>
+            setName(event.target.value)
+          }
           type="text"
-          placeholder="Titulo"
+          placeholder="Nome"
+          required
         />
         <Campo
-          value={descricao}
-          onChange={({ target }) => setDescricao(target.value)}
-          as="textarea"
-          placeholder="Descrição da tarefa"
+          value={email}
+          onChange={(event: { target: { value: SetStateAction<string> } }) =>
+            setEmail(event.target.value)
+          }
+          type="email"
+          placeholder="E-mail"
+          required
         />
-        <Opcoes>
-          <p>Prioridade</p>
+        <Campo
+          value={tell === 0 ? '' : tell.toString()}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            const inputValue = event.target.value
+            const numericValue = parseInt(inputValue, 10)
 
-          {Object.values(enums.Prioridade).map((prioridade) => (
-            <Opcao key={prioridade}>
-              <input
-                value={prioridade}
-                name="prioridade"
-                type="radio"
-                onChange={(evento) =>
-                  setPrioridade(evento.target.value as enums.Prioridade)
-                }
-                id={prioridade}
-                defaultChecked={prioridade === enums.Prioridade.NORMAL}
-              />{' '}
-              <label htmlFor={prioridade}>{prioridade}</label>
-            </Opcao>
-          ))}
-        </Opcoes>
-        <BotaoSalvar type="submit">Cadastrar</BotaoSalvar>
-      </Form>
-    </MainContainer>
+            if (!isNaN(numericValue)) {
+              setTell(numericValue)
+            } else if (inputValue === '') {
+              setTell(0)
+            }
+          }}
+          type="tel"
+          placeholder="Telefone"
+          required
+        />
+        <Button type="submit">Adicionar</Button>
+      </Style.Form>
+    </>
   )
 }
 

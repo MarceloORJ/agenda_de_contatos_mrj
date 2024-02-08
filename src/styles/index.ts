@@ -1,58 +1,54 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import variaveis from './variaveis'
 
 const EstiloGlobal = createGlobalStyle`
   * {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: Roboto, sans-serif;
-    list-style:none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rajdhani', sans-serif;
+    list-style: none;
   }
 
+  body{
+    background-color: #F39F5A;
+  }
 `
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: 224px auto;
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `
 
-export const MainContainer = styled.main`
-  padding: 0px 40px;
-  height: 100vh;
-  overflow-y: scroll;
-`
-
-export const Titulo = styled.h2`
-  display: block;
-  margin: 40px 0px;
+export const Campo = styled.input`
+  padding: 10px;
+  width: 100%;
   font-size: 18px;
   font-weight: bold;
-`
-export const Campo = styled.input`
-  padding: 8px;
-  background-color: #fff;
-  border-radius: 8px;
-  font-weight: bold;
-  color: #666666;
-  border-color: #666666;
-  width: 100%;
-`
-
-export const Botao = styled.button`
-  font-weight: bold;
-  font-size: 12px;
-  color: #fff;
-  padding: 8px 12px;
+  background-color: #f1f1f1;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: ${variaveis.azulEscuro};
-  margin-right: 8px;
+  border-radius: 32px;
+  color: #666666;
+  outline: none;
+  letter-spacing: 1px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 1px 2px 3px;
 `
 
-export const BotaoSalvar = styled(Botao)`
-  background-color: ${variaveis.verde};
+export const Button = styled.button`
+  padding: 8px 16px;
+  cursor: pointer;
+
+  font-weight: bold;
+  background-color: #053b50;
+  color: #fff;
+
+  border: none;
+  border-radius: 16px;
 `
 
 export default EstiloGlobal
